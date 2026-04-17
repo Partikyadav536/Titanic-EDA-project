@@ -11,9 +11,28 @@ df = pd.read_csv('titanic_dataset.csv')
 # -----------------------------
 # Sex vs Survived
 # -----------------------------
-print(df.groupby('Sex')['Survived'].mean(),'\n')
+survival_by_sex = df.groupby('Sex')['Survived'].mean()
+print(survival_by_sex)
+
+colors = ['#7A9E9F', '#2F4B7C']
+
+plt.figure(figsize=(7,4))
+plot = plt.bar(
+    survival_by_sex.index,
+    survival_by_sex.values,
+    color = colors,
+    edgecolor = 'black'
+    )
+plt.title('Survival by Gender')
+plt.xlabel('Gender')
+plt.ylabel('Survived')
+for i, v in enumerate(survival_by_sex.values):
+    plt.text(i, v + 0.02, f"{v*100:.0f}%", ha='center')
+plt.tight_layout()
+plt.show()
 # Insight:
 # Gender remains the dominant factor, especially among adults where survival differences are significant.
+
 
 # -----------------------------
 # Age vs Survived
